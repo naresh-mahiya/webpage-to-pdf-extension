@@ -18,19 +18,19 @@ A Chrome extension that allows users to convert selected webpage text or entire 
 *Clean and minimal popup interface with View All PDFs button*
 
 ### Context Menu
-![Context Menu](screenshots/context-menu.png)
+<img src="screenshots/context-menu.png" width="300" alt="Context Menu">
 *Right-click menu showing PDF conversion options*
 
 ### PDF Generation
-![PDF Generation](screenshots/pdf-generation.png)
+<img src="screenshots/pdf-generation.png" width="300" alt="PDF Generation">
 *Prompt for custom filename when generating PDF*
 
 ### All PDFs View
-![All PDFs View](screenshots/all-pdfs.png)
+<img src="screenshots/all-pdfs.png" width="300" alt="All PDFs View">
 *List of all generated PDFs with download options*
 
 ### Extension Store
-![Extension Store](screenshots/extension_store.png)
+<img src="screenshots/extension_store.png" width="300" alt="Extension Store">
 *Extension available in Chrome Web Store*
 
 ## 📁 Project Structure
