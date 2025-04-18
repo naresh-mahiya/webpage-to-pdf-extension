@@ -16,14 +16,15 @@ app.set('allpdfs', path.join(__dirname, 'allpdfs'));
 app.use(express.static(path.join(__dirname, 'pdfs')));
 
 app.post("/api/generate-pdf", async (req, res) => {
-  const { text } = req.body;
+  const { text, filename } = req.body;
   try {
-    let uuid = crypto.randomUUID();
-    const filePath = `${__dirname}\\pdfs\\${uuid}.pdf`;
+    // Use provided filename or generate UUID if not provided
+    const pdfFilename = filename ? `${filename}.pdf` : `${crypto.randomUUID()}.pdf`;
+    const filePath = `${__dirname}\\pdfs\\${pdfFilename}`;
     const writeStream = fs.createWriteStream(filePath);
 
     res.setHeader("Content-Type", "application/pdf");
-    res.setHeader("Content-Disposition", `attachment; filename=${uuid}.pdf`);
+    res.setHeader("Content-Disposition", `attachment; filename=${pdfFilename}`);
     const doc = new PDFDocument();
     doc.pipe(writeStream);
     doc.text(text);
@@ -33,7 +34,7 @@ app.post("/api/generate-pdf", async (req, res) => {
       try {
         const fileContent = await fs.promises.readFile(filePath);
         res.setHeader("Content-Type", "application/pdf");
-        res.setHeader("Content-Disposition", `attachment; filename=${uuid}.pdf`);
+        res.setHeader("Content-Disposition", `attachment; filename=${pdfFilename}`);
         res.send(fileContent);
       } catch (err) {
         console.error("Error reading PDF file:", err);
@@ -67,9 +68,6 @@ app.get('/pdfs/:filename', (req, res) => {
     res.sendFile(filePath);
   });
 });
-
-
-
 
 app.listen(PORT, () =>
   console.log(`Server running on http://localhost:${PORT}`)
