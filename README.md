@@ -145,4 +145,21 @@ project/
 3. **View All PDFs not working**:
    - Ensure backend server is running
    - Check if PDFs directory exists
-   - Verify proper permissions 
+   - Verify proper permissions
+
+## 🤝 Contributions
+
+Feel free to contribute to this project! You can:
+- Add new features like batch processing or cloud storage
+- Improve the UI/UX design
+- Fix bugs or optimize performance
+- Add support for more languages
+
+Just fork the repo, make your changes, and submit a pull request!
+
+## 📌 Notes
+
+- The backend server must be running for the extension to work
+- PDFs are stored in the backend's `pdfs` directory
+- The extension communicates with `localhost:5000`
+- All generated PDFs can be viewed through the extension's popup 
