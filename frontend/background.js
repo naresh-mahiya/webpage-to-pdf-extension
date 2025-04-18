@@ -1,12 +1,14 @@
 chrome.runtime.onInstalled.addListener(() => {
+  //right click menu item creation
   chrome.contextMenus.create({
     id: "convertToPDF",
     title: "Convert page text to PDF",
-    contexts: ["page", "selection"]
+    contexts: ["page", "selection"]// show menu item when clicked on page 
+    // or clicked after text selection
   });
 });
 
-chrome.contextMenus.onClicked.addListener((info, tab) => {
+chrome.contextMenus.onClicked.addListener((info, tab) => { //info-->context related
   if (info.menuItemId === "convertToPDF") {
     console.log("Getting convertToPDF");
     const selectedText = info.selectionText;
@@ -28,22 +30,22 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
                 if (!response.ok) {
                   throw new Error('Failed to generate PDF');
                 }
-                return response.arrayBuffer();
+                return response.arrayBuffer();//binary buffer of pdf
               })
               .then(arrayBuffer => {
                 const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
-                const url = URL.createObjectURL(blob);
+                const url = URL.createObjectURL(blob);//blob-->binary large object
                 const a = document.createElement('a');
-                a.href = url;
+                a.href = url;//blob ko refrence ke liye
                 a.download = 'output.pdf';
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
-                URL.revokeObjectURL(url);
+                URL.revokeObjectURL(url);//clean the url from browser storage
               })
               .catch(error => console.error('Error:', error));
           },
-          args: [selectedText]
+          args: [selectedText] //args for the fucntion in scripting
         });
       });
     }
@@ -54,7 +56,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
         chrome.scripting.executeScript({
           target: { tabId: tab.id },
           function: function () {
-          const allText = document.body.innerText;
+            const allText = document.body.innerText;
             fetch('http://localhost:5000/api/generate-pdf', {
               method: 'POST',
               headers: {
