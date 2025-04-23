@@ -157,9 +157,3 @@ Feel free to contribute to this project! You can:
 
 Just fork the repo, make your changes, and submit a pull request!
 
-## 📌 Notes
-
-- The backend server must be running for the extension to work
-- PDFs are stored in the backend's `pdfs` directory
-- The extension communicates with `localhost:5000`
-- All generated PDFs can be viewed through the extension's popup 

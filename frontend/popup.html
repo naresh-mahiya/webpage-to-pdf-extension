@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,7 @@
     <!-- Include Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-gray-100 w-64 flex flex-col justify-between rounded-xl shadow-lg">
 
     <!-- Title Section -->
@@ -20,12 +21,54 @@
         Select the text you want to convert, right-click, and choose "Convert into PDF" from the menu.
     </div>
 
-    <!-- View PDFs Button -->
-    <div class="px-6 pb-4 w-full text-center">
-        <a href="http://localhost:5000/" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transform transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-            View All PDFs
-        </a>
+
+    <!-- Controls Section -->
+    <div class="px-4 py-2">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Font</label>
+        <select id="fontSelect" class="w-full mb-2 border rounded px-2 py-1">
+            <option value="helvetica">Helvetica</option>
+            <option value="times">Times</option>
+            <option value="courier">Courier</option>
+        </select>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Font Size</label>
+        <input id="fontSizeInput" type="number" value="14" min="8" max="48"
+            class="w-full mb-2 border rounded px-2 py-1" />
+        <label class="block text-sm font-medium text-gray-700 mb-1">Text Color</label>
+        <input id="fontColorInput" type="color" value="#000000" class="w-full mb-2 border rounded px-2 py-1" />
+        <label class="block text-sm font-medium text-gray-700 mb-1">Page Size</label>
+        <select id="pageSizeSelect" class="w-full mb-2 border rounded px-2 py-1">
+            <option value="a4">A4</option>
+            <option value="letter">Letter</option>
+        </select>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Orientation</label>
+        <select id="orientationSelect" class="w-full mb-2 border rounded px-2 py-1">
+            <option value="portrait">Portrait</option>
+            <option value="landscape">Landscape</option>
+        </select>
     </div>
 
+    <!-- Selected Content Display -->
+    <div class="px-4 py-2">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Selected Text / Page Content</label>
+        <div id="selectedContentDisplay" class="w-full border rounded px-2 py-1 mb-2 bg-white text-gray-800"
+            style="min-height: 60px; max-height: 120px; overflow-y: auto;"></div>
+    </div>
+
+    <!-- Preview & Download Button -->
+    <div class="px-4 pb-2 text-center">
+        <button id="previewBtn"
+            class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg shadow-lg transition duration-200">Preview
+            & Download PDF</button>
+    </div>
+
+    <!-- PDF Preview Area -->
+    <div id="pdfPreview" class="px-4 pb-2 text-center"></div>
+
+
+    <!-- Local jsPDF and html2canvas -->
+    <script src="libs/jspdf.umd.min.js"></script>
+    <script src="libs/html2canvas.min.js"></script>
+    <script src="popup.js"></script>
 </body>
+
 </html>
