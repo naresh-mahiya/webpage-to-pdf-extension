@@ -3,7 +3,8 @@ chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
     id: "convertToPDF",
     title: "Convert page text to PDF",
-    contexts: ["page", "selection"]// show menu item when clicked on page 
+    contexts: ["selection"], //
+    // contexts: ["page", "selection"]//it shoes  menu item when clicked on page 
     // or clicked after text selection
   });
 });

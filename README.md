@@ -1,65 +1,53 @@
 # 🚀 Text to PDF Converter Chrome Extension
 
-A Chrome extension that allows users to convert selected webpage text or entire page content into PDF format with custom filenames.
+A Chrome extension that allows users to convert selected webpage text or entire page content into PDF format with custom styling—completely client-side, with no backend required.
 
 ## ✨ Features
 
-- Convert selected text to PDF
-- Convert entire webpage to PDF
+- Convert selected text or full page content to PDF
+- Choose font, font size, text color, page size, and orientation
+- Preview PDF before downloading
 - Custom filename support
-- Clean and minimal user interface
-- View all generated PDFs
+- Modern and minimal user interface
+- 100% frontend: no server or backend needed
 - Simple and intuitive workflow
 
 ## 📸 Screenshots
 
 ### Extension Popup
 ![Extension Popup](screenshots/popup.png)
-*Clean and minimal popup interface with View All PDFs button*
+*Modern popup interface with styling controls and PDF preview*
 
 ### Context Menu
 <img src="screenshots/context-menu.png" width="450" height="300" alt="Context Menu">
-*Right-click menu showing PDF conversion options*
+*Right-click menu showing PDF conversion option*
+
+### Download preview
+<img src="screenshots/preview.png" width="450" height="300" alt="Download preview">
+*Download preview of pdf in popup*
 
 ### PDF Generation
 <img src="screenshots/pdf-generation.png" width="500" height="350" alt="PDF Generation">
-*Prompt for custom filename when generating PDF*
-
-### All PDFs View
-<img src="screenshots/all-pdfs.png" width="450" height="300" alt="All PDFs View">
-*List of all generated PDFs with download options*
-
-### Extension Store
-<img src="screenshots/extension_store.png" width="500" height="350" alt="Extension Store">
-*Extension available in Chrome Web Store*
+*ownload PDF with custom filename*
 
 ## 📁 Project Structure
 
 ```
 project/
-├── frontend/           # Chrome Extension files
-│   ├── manifest.json  # Extension configuration
-│   ├── popup.html     # Extension popup UI
-│   └── background.js  # Background service worker
-└── backend/           # Node.js server
-    ├── server.js      # Express server
-    ├── package.json   # Backend dependencies
-    ├── views/         # EJS templates
-    │   └── allpdfs.ejs # PDF listing page
-    └── pdfs/          # Generated PDF storage
+└── frontend/               # Chrome Extension files
+    ├── manifest.json      # Extension configuration
+    ├── popup.html         # Extension popup UI
+    ├── popup.js           # Popup logic
+    ├── background.js      # Background script for context menu
+    ├── libs/              # Local jsPDF and html2canvas
+    ├── icons/             # Extension icons
+    ├── .gitignore         # Git ignore file
+    └── ...
 ```
 
 ## 🔧 Installation
 
-1. **Backend Setup**:
-   ```bash
-   cd backend
-   npm install
-   npm start
-   ```
-   The server will run on `http://localhost:5000`
-
-2. **Chrome Extension Setup**:
+1. **Chrome Extension Setup**:
    - Open Chrome browser
    - Go to `chrome://extensions/`
    - Enable "Developer mode" (toggle in top-right corner)
@@ -70,82 +58,49 @@ project/
 
 1. **Convert Selected Text**:
    - Select the text you want to convert
-   - Right-click and choose "Convert into pdf" from the context menu
-   - Enter a filename when prompted
-   - The PDF will be generated and downloaded automatically
+   - Right-click and choose "Convert into PDF" from the context menu
+   - The extension popup will open with your selected text
+   - Choose font, size, color, page size, and orientation as desired
+   - Click "Preview & Download PDF" to preview
+   - Click "Download PDF" to save with your custom filename
 
 2. **Convert Entire Page**:
-   - Right-click anywhere on the page
-   - Choose "Convert into pdf" from the context menu
-   - Enter a filename when prompted
-   - The PDF will be generated and downloaded automatically
-
-3. **View All PDFs**:
-   - Click the extension icon
-   - Click "View All PDFs" to see all generated PDFs
+   - Right-click anywhere on the page (no text selected)
+   - Choose "Convert into PDF" from the context menu
+   - The popup will open with the entire page content
+   - Use the styling controls, preview, and download as above
 
 ## 💻 Technical Details
 
 ### Frontend (Chrome Extension)
-- Built on `Chrome Extension Manifest V3` with service worker architecture
+- Built on `Chrome Extension Manifest V3`
 - Uses `chrome.contextMenus` API for right-click menu integration
-- Implements `chrome.scripting` API for content script injection
-- Leverages `chrome.storage` API for local settings management
-- Handles text selection and conversion through background service worker
-- Provides minimal popup interface with `HTML5/CSS3`
-
-### Backend (Node.js Server)
-- **Server Framework**: `Express.js`
-  - RESTful API endpoints
-  - CORS enabled for extension communication
-  - Body parsing for JSON data
-- **PDF Generation**:
-  - `PDFKit` for PDF creation
-  - Customizable page settings
-  - Text formatting preservation
-- **File Management**:
-  - Secure file storage
-  - Unique filename generation
-  - PDF directory organization
-- **View Engine**: `EJS`
-  - Dynamic PDF listing page
-  - Responsive table layout
-  - Download links generation
+- Uses `chrome.storage` API for passing selected content
+- All PDF generation is done client-side using `jsPDF` and `html2canvas` (loaded locally)
+- No backend or server is required—everything runs in the browser
+- Modern popup UI with Tailwind CSS
 
 ## 📦 Dependencies
 
-### Backend
-- express: ^4.19.2
-- cors: ^2.8.5
-- body-parser: ^1.20.2
-- pdfkit: ^0.15.0
-- ejs: ^3.1.10
+- [jsPDF](https://github.com/parallax/jsPDF) (UMD build, local)
+- [html2canvas](https://github.com/niklasvh/html2canvas) (local)
+- [Tailwind CSS](https://tailwindcss.com/) (CDN)
 
 ## 📌 Notes
 
-- The backend server must be running for the extension to work
-- PDFs are stored in the backend's `pdfs` directory
-- The extension communicates with `localhost:5000`
-- All generated PDFs can be viewed through the extension's popup
+- No backend is required. All features work entirely in the browser.
+- PDFs are generated and downloaded locally; they are not stored or viewable later unless you save them.
+- The "View All PDFs" feature and backend/server have been removed.
 
 ## ⚠️ Troubleshooting
 
 1. **Extension not working**:
-   - Check if backend server is running
    - Verify extension is properly loaded
    - Check Chrome's console for errors
 
 2. **PDF generation fails**:
-   - Ensure backend server is accessible
-   - Check network connectivity
-   - Verify sufficient disk space
-   - For large webpages, try selecting smaller sections of text
-   - If the page is too large, the conversion might fail due to memory constraints
-
-3. **View All PDFs not working**:
-   - Ensure backend server is running
-   - Check if PDFs directory exists
-   - Verify proper permissions
+   - For very large webpages, try selecting smaller sections of text
+   - If you see blank or broken PDFs, try changing font size or page orientation
 
 ## 🤝 Contributions
 

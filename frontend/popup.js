@@ -75,7 +75,7 @@ document.getElementById('previewBtn').addEventListener('click', async function (
     window._currentPdfDoc = doc;
 
     downloadBtn.onclick = function() {
-        let filename = prompt('Enter filename for PDF (without extension):', document.title || 'converted');
+        let filename = prompt('Enter filename for PDF (without extension .pdf):', document.title || 'converted');
         if (!filename) filename = 'converted';
         window._currentPdfDoc.save(filename + '.pdf');
     };
