@@ -1,10 +1,10 @@
 # 🚀 Text to PDF Converter Chrome Extension
 
-A Chrome extension that allows users to convert selected webpage text or entire page content into PDF format with custom styling—completely client-side, with no backend required.
+A Chrome extension that allows users to convert selected webpage text content into PDF format with custom styling—completely client-side, with no backend required.
 
 ## ✨ Features
 
-- Convert selected text or full page content to PDF
+- Convert selected text  content to PDF
 - Choose font, font size, text color, page size, and orientation
 - Preview PDF before downloading
 - Custom filename support
@@ -64,33 +64,30 @@ project/
    - Click "Preview & Download PDF" to preview
    - Click "Download PDF" to save with your custom filename
 
-2. **Convert Entire Page**:
-   - Right-click anywhere on the page (no text selected)
-   - Choose "Convert into PDF" from the context menu
-   - The popup will open with the entire page content
-   - Use the styling controls, preview, and download as above
+
 
 ## 💻 Technical Details
 
-### Frontend (Chrome Extension)
+**Chrome Extension APIs:**
 - Built on `Chrome Extension Manifest V3`
 - Uses `chrome.contextMenus` API for right-click menu integration
 - Uses `chrome.storage` API for passing selected content
+- `chrome.runtime.onMessage` & `chrome.runtime.sendMessage`: Enables communication between      background scripts and the popup for passing selected content.
+- `chrome.action.openPopup`: Programmatically opens the popup when the context menu is used.
 - All PDF generation is done client-side using `jsPDF` and `html2canvas` (loaded locally)
 - No backend or server is required—everything runs in the browser
 - Modern popup UI with Tailwind CSS
 
-## 📦 Dependencies
+ **PDF Generation:**
+  - `jsPDF` (UMD build): Generates PDFs entirely in the browser, supports custom fonts, sizes, colors, and page layouts.
+  - `html2canvas`: (Prepared for future use) Can render HTML elements as images for PDF embedding.
 
-- [jsPDF](https://github.com/parallax/jsPDF) (UMD build, local)
-- [html2canvas](https://github.com/niklasvh/html2canvas) (local)
-- [Tailwind CSS](https://tailwindcss.com/) (CDN)
+- **JavaScript/Browser Features:**
+  - `window._currentPdfDoc`: Stores the currently previewed jsPDF document for on-demand download.
+  - `prompt()`: Used for custom filename input before saving the PDF.
+  - Dynamic DOM manipulation: For previewing PDFs and managing UI state.
 
-## 📌 Notes
 
-- No backend is required. All features work entirely in the browser.
-- PDFs are generated and downloaded locally; they are not stored or viewable later unless you save them.
-- The "View All PDFs" feature and backend/server have been removed.
 
 ## ⚠️ Troubleshooting
 
